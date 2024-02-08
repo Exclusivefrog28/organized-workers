@@ -1,0 +1,19 @@
+{
+  "name": "organized-workers",
+  "version": "0.1.0",
+  "description": "A lightweight javascript library enabling clean communication with webworkers",
+  "type": "module",
+  "module": "./src/organized-workers.js",
+  "keywords": [
+    "webworker",
+    "worker",
+    "parallel",
+    "multihread",
+    "ES6",
+    "ECMAScript",
+    "6",
+    "module"
+  ],
+  "author": "Exclusivefrog28",
+  "license": "MIT"
+}
