@@ -1,6 +1,6 @@
-import {ManagerRoute} from "./src/organized-workers.js";
+import {Manager} from "./src/organized-workers.js";
 
-const mainThread = new ManagerRoute()
+const mainThread = new Manager()
 mainThread.register('repeat', (string, count) => {
     let answer = ""
     for (let i = 0; i < count; i++) {

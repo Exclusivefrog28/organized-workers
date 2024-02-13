@@ -1,4 +1,4 @@
-function WorkerRoute(workerPath) {
+function OrganizedWorker(workerPath) {
     const reports = {};
     const worker = new Worker(workerPath, {type: 'module'});
 
@@ -40,7 +40,7 @@ function WorkerRoute(workerPath) {
     }
 }
 
-export function ManagerRoute() {
+export function Manager() {
     const jobs = {};
 
     this.register = (name, func) => {
@@ -78,4 +78,4 @@ export function ManagerRoute() {
 
 }
 
-export default WorkerRoute;
+export default OrganizedWorker;
