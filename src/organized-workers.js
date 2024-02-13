@@ -35,7 +35,7 @@ function OrganizedWorker(workerPath) {
         if (e.data.name in reports) {
             reports[e.data.name](...e.data.args);
         } else {
-            throw new ReferenceError(`Callback with name \"${e.data.name}\" has not been registered!`);
+            throw new ReferenceError(`Report with name \"${e.data.name}\" has not been registered!`);
         }
     }
 }
@@ -72,7 +72,7 @@ export function Manager() {
         if (e.data.name in jobs) {
             jobs[e.data.name](...e.data.args);
         } else {
-            throw new ReferenceError(`Function with name \"${e.data.name}\" has not been registered!`);
+            throw new ReferenceError(`Job with name \"${e.data.name}\" has not been registered!`);
         }
     }
 
