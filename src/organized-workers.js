@@ -7,33 +7,33 @@ function OrganizedWorker(workerPath) {
     }
 
     this.register = (name, callback) => {
-        reports[name] = (...args) => {
-            const result = callback(...args);
-            if (result !== undefined) postMessage({name: name, args: [result]});
+        reports[name] = (...data) => {
+            const result = callback(...data);
+            if (result !== undefined) postMessage({name: name, data: [result]});
         };
         return this;
     }
 
     this.registerAsync = (name, callback) => {
-        reports[name] = (...args) => {
-            callback(...args).then(result => postMessage({name: name, args: [result]}));
+        reports[name] = (...data) => {
+            callback(...arguments).then(result => postMessage({name: name, data: [result]}));
         };
         return this;
     }
 
-    this.call = (name, ...args) => {
+    this.call = (name, ...data) => {
         const promise = new Promise((resolve, reject) => {
             reports[name] = (result) => {
                 resolve(result);
             }
         })
-        worker.postMessage({name: name, args: args});
+        worker.postMessage({name: name, data: data});
         return promise
     }
 
     worker.onmessage = (e) => {
         if (e.data.name in reports) {
-            reports[e.data.name](...e.data.args);
+            reports[e.data.name](...e.data.data);
         } else {
             throw new ReferenceError(`Report with name \"${e.data.name}\" has not been registered!`);
         }
@@ -44,33 +44,33 @@ export function Manager() {
     const jobs = {};
 
     this.register = (name, func) => {
-        jobs[name] = (...args) => {
-            const result = func(...args);
-            if (result !== undefined) postMessage({name: name, args: [result]});
+        jobs[name] = (...data) => {
+            const result = func(...data);
+            if (result !== undefined) postMessage({name: name, data: [result]});
         };
         return this;
     }
 
     this.registerAsync = (name, callback) => {
-        jobs[name] = (...args) => {
-            callback(...args).then(result => postMessage({name: name, args: [result]}));
+        jobs[name] = (...data) => {
+            callback(...arguments).then(result => postMessage({name: name, data: [result]}));
         };
         return this;
     }
 
-    this.call = (name, ...args) => {
+    this.call = (name, ...data) => {
         const promise = new Promise((resolve, reject) => {
             jobs[name] = (result) => {
                 resolve(result);
             }
         })
-        postMessage({name: name, args: args});
+        postMessage({name: name, data: data});
         return promise
     }
 
     onmessage = (e) => {
         if (e.data.name in jobs) {
-            jobs[e.data.name](...e.data.args);
+            jobs[e.data.name](...e.data.data);
         } else {
             throw new ReferenceError(`Job with name \"${e.data.name}\" has not been registered!`);
         }
